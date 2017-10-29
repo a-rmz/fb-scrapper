@@ -1,0 +1,34 @@
+PATH
+  remote: .
+  specs:
+    fbpostscrapper (0.1.0)
+      koala (~> 3.0)
+      rethinkdb
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
+    faraday (0.13.1)
+      multipart-post (>= 1.2, < 3)
+    json (2.1.0)
+    koala (3.0.0)
+      addressable
+      faraday
+      json (>= 1.8)
+    multipart-post (2.0.0)
+    public_suffix (3.0.0)
+    rake (10.5.0)
+    rethinkdb (2.3.0.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.16.a)
+  fbpostscrapper!
+  rake (~> 10.0)
+
+BUNDLED WITH
+   1.16.0.pre.3
