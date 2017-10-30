@@ -1,8 +1,8 @@
 
 class Reactions
-  attr_accessor :like, :love, :wow, :haha, :sad, :angry
+  attr_accessor :like, :love, :wow, :haha, :sad, :angry, :thankful, :pride
 
-  def initialize(like, love, wow, haha, sad, angry)
+  def initialize(like, love, wow, haha, sad, angry, thankful, pride)
     @date = Time.now
     @like = like
     @love = love
@@ -10,6 +10,8 @@ class Reactions
     @haha = haha
     @sad = sad
     @angry = angry
+    @thankful = thankful ||= 0
+    @pride = pride ||= 0
   end
 
   def db_obj
@@ -20,7 +22,9 @@ class Reactions
       wow: @wow,
       haha: @haha,
       sad: @sad,
-      angry: @angry
+      angry: @angry,
+      thankful: @thankful,
+      pride: @pride
     } 
   end
 
