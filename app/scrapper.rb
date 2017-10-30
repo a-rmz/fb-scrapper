@@ -28,27 +28,30 @@ class Scrapper
     posts = []
     result = @fb_api.get_connection(page_id, 'posts', {
       limit: 5,
+      since: "#{since.day}-#{since.month}-#{since.year}",
       fields: [
         'id',
         'message',
+        'story',
         'created_time',
         'reactions.type(LIKE).limit(0).summary(1).as(like)',
         'reactions.type(LOVE).limit(0).summary(1).as(love)',
         'reactions.type(WOW).limit(0).summary(1).as(wow)',
         'reactions.type(HAHA).limit(0).summary(1).as(haha)',
         'reactions.type(SAD).limit(0).summary(1).as(sad)',
-        'reactions.type(ANGRY).limit(0).summary(1).as(angry)'
+        'reactions.type(ANGRY).limit(0).summary(1).as(angry)',
+        'reactions.type(THANKFUL).limit(0).summary(1).as(thankful)',
+        'reactions.type(PRIDE).limit(0).summary(1).as(pride)'
       ]
     })
 
     loop do
       posts += result
-      t = result.last['created_time']
-      last_time = Time.new(t[0..3], t[5..6], t[8..9], t[11..12], t[14..15], t[17..18])
       result = result.next_page
-      break if last_time < since
+      break if !result
     end
     posts
   end
+
 end
 
