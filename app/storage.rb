@@ -15,11 +15,11 @@ class Storage
     get = r.table('pages').get(page.id)
 
     if get.run(@db)
-      puts get.update{ |doc| 
+      get.update{ |doc| 
         { :fan_count => (doc['fan_count'] + [ page.fan_count.db_obj ]) }
       }.run(@db)
     else
-      puts r.table('pages').insert(page.db_obj).run(@db)
+      r.table('pages').insert(page.db_obj).run(@db)
     end
   end
 
@@ -27,11 +27,11 @@ class Storage
     get = r.table('posts').get(post.id)
 
     if get.run(@db)
-      puts get.update{ |doc| 
+      get.update{ |doc| 
         { :reactions => (doc['reactions'] + [ post.reactions.db_obj ]) }
       }.run(@db)
     else
-      puts r.table('posts').insert(post.db_obj).run(@db)
+      r.table('posts').insert(post.db_obj).run(@db)
     end
 
   end
