@@ -1,4 +1,10 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
+
+# Clean the database
+if ARGV.include? "-c" or ARGV.include? "--clear-db" then
+  require_relative "../db/clear"
+end
+
 require "fbpostscrapper"
