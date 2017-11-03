@@ -4,23 +4,38 @@ PATH
     fbpostscrapper (0.1.0)
       koala (~> 3.0)
       rethinkdb
+      time_difference
 
 GEM
   remote: https://rubygems.org/
   specs:
+    activesupport (5.1.4)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (~> 0.7)
+      minitest (~> 5.1)
+      tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    concurrent-ruby (1.0.5)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
+    i18n (0.9.0)
+      concurrent-ruby (~> 1.0)
     json (2.1.0)
     koala (3.0.0)
       addressable
       faraday
       json (>= 1.8)
+    minitest (5.10.3)
     multipart-post (2.0.0)
     public_suffix (3.0.0)
     rake (10.5.0)
     rethinkdb (2.3.0.2)
+    thread_safe (0.3.6)
+    time_difference (0.7.0)
+      activesupport (~> 5.1)
+    tzinfo (1.2.4)
+      thread_safe (~> 0.1)
 
 PLATFORMS
   ruby
