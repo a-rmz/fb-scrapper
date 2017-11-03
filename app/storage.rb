@@ -35,5 +35,19 @@ class Storage
     end
 
   end
+
+  def insert_comment(comment)
+    get = r.table('comments').get(comment.id)
+
+    if get.run(@db)
+      # Also need to update comments
+      get.update{ |doc| 
+        { :reactions => (doc['reactions'] + [ comment.reactions.db_obj ]) }
+      }.run(@db)
+    else
+      r.table('comments').insert(comment.db_obj).run(@db)
+    end
+
+  end
 end
 
