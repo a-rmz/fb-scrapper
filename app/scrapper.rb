@@ -27,7 +27,7 @@ class Scrapper
   def scrape_posts(page_id, since)
     posts = []
     result = @fb_api.get_connection(page_id, 'posts', {
-      limit: 5,
+      limit: 100,
       since: "#{since.day}-#{since.month}-#{since.year}",
       fields: [
         'id',
@@ -51,6 +51,56 @@ class Scrapper
       break if !result
     end
     posts
+  end
+
+  def scrape_comments(post_id)
+    comments = []
+    result = @fb_api.get_connection(post_id, 'comments', {
+     limit: 100,
+      fields: [
+        'id',
+        'message',
+        'from',
+        'created_time',
+        'reactions.type(LIKE).limit(0).summary(1).as(like)',
+        'reactions.type(LOVE).limit(0).summary(1).as(love)',
+        'reactions.type(WOW).limit(0).summary(1).as(wow)',
+        'reactions.type(HAHA).limit(0).summary(1).as(haha)',
+        'reactions.type(SAD).limit(0).summary(1).as(sad)',
+        'reactions.type(ANGRY).limit(0).summary(1).as(angry)',
+        'reactions.type(THANKFUL).limit(0).summary(1).as(thankful)',
+        'reactions.type(PRIDE).limit(0).summary(1).as(pride)'
+      ]
+    })
+
+    puts ""
+    loop do
+      # Make sure that the result array has some things in it
+      if result.length > 0
+        comments += result
+        print "#{comments.length} comments fetched\r"
+        $stdout.flush
+      end
+
+      # Save the next page
+      next_page_params = result.next_page_params
+
+      # Try to get the next page but wait for an error
+      begin
+        result = result.next_page
+
+      # In case there's an  API error, send to sleep to see if
+      # the error is fixed
+      rescue Koala::Facebook::ServerError => error
+        @logger.debug 'Facebook error, waiting for 2 minutes'
+        @logger.error error
+        sleep(120)
+        result = @graph.get_page(next_page_params)
+      end
+
+      break if !result
+    end
+    comments
   end
 
 end
